@@ -1,6 +1,14 @@
+import { getServerSession } from "next-auth";
+import { options } from "../api/auth/[...nextauth]/options";
+import { redirect } from "next/dist/server/api-utils";
 
 
-const Member = () => {
+const Member = async () => {
+  const session = await getServerSession(options);
+
+  if(!session) {
+    redirect("/api/auth/signin?callbackUrl=/Member");
+  }
   return (
     <div>
       <h1>Member Server Session</h1>
